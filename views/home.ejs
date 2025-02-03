@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Screen</title>
+  </head>
+  <body>
+    <div>
+      <H1>Location Spoted Application</H1>
+    </div>
+    <div id="mainBlock">
+      <input placeholder="Enter Your Message" id="ms" type="text" />
+      <button type="submit" id="sendbtn">Send</button>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const btn = document.getElementById("sendbtn");
+      const inputmessage = document.getElementById("ms");
+      const socket = io();
+      btn.addEventListener("click",()=>{
+        
+        const Message = inputmessage.value;
+        console.log(Message);
+        socket.emit("Send-message-to-server",(Message));
+        console.log("Client Send Info To Server");
+        
+      })
+      socket.on("Give-to-all-client",(datamsg)=>{
+          console.log("All Client Side");
+          console.log(datamsg);
+          let p = document.createElement("p");
+          p.innerText = datamsg;
+          let mainss = document.getElementById("mainBlock");
+          mainss.appendChild(p);
+        })
+    </script>
+  </body>
+</html>
